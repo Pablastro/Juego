@@ -16,7 +16,7 @@ public class MainApartado_a {
 	public static void main(String[] args) {
 			
 		Scanner sc = new Scanner(System.in);
-		Jugador jugadores[];
+        Jugador[] jugadores;
 		String nombre;
 		char menu = 'a', menu2 = 'a';
 		int cont,tam, i = 0, ganador, juego;
@@ -25,7 +25,7 @@ public class MainApartado_a {
 		do {
 			do {
 				System.out.println("¿Cuantos jugadores? [1-5]");
-				cont = sc.nextInt();
+                cont = sc.nextInt();
 			} while (cont < 1 || cont > 5);
 			sc.nextLine();
 			tam = cont + 1;
@@ -42,47 +42,46 @@ public class MainApartado_a {
 				}
 				jugadores[tam - cont - 1] = new Jugador(nombre,banca);
 			}
-			
-			for (i = 0; i < jugadores.length; i++) {
-				jugadores[i].repartoInicial();
+
+            for (Jugador jugador : jugadores) {
+                jugador.repartoInicial();
 				System.out.println(" ");
-				System.out.println("--------------------------" + jugadores[i].getNombre() + "--------------------------");
-				System.out.println(jugadores[i]);
+                System.out.println("--------------------------" + jugador.getNombre() + "--------------------------");
+                System.out.println(jugador);
 			}
 			
 			do {
-				for (i = 0; i < jugadores.length; i++) {
-					if (jugadores[i].isJuega() && jugadores[i].sumarPuntos() < 7.5) {
+                for (Jugador jugador : jugadores) {
+                    if (jugador.isJuega() && jugador.sumarPuntos() < 7.5) {
 						System.out.println(" ");
-						System.out.println("--------------------------" + jugadores[i].getNombre() + "--------------------------");
-						System.out.println(jugadores[i]);
-						if (!jugadores[i].isBanca()) {
+                        System.out.println("--------------------------" + jugador.getNombre() + "--------------------------");
+                        System.out.println(jugador);
+                        if (!jugador.isBanca()) {
 							do {
 								System.out.println("¿Quieres robar? [s/n]");
 								menu = sc.nextLine().charAt(0);
 							} while (menu != 's' && menu != 'n');
 						} else {
-							jugadores[i].sumarPuntos();
+                            jugador.sumarPuntos();
 						}
-						if((!jugadores[i].isBanca() && menu == 's') || (jugadores[i].isBanca() && jugadores[i].probabilidad(jugadores,(i)) < 50)) {
+                        if ((!jugador.isBanca() && menu == 's') || (jugador.isBanca() && jugador.probabilidad(jugadores, (i)) < 50)) {
 							System.out.println();
-							jugadores[i].robar(jugadores);
-							jugadores[i].setJuega(true);
+                            jugador.robar(jugadores);
+                            jugador.setJuega(true);
 							System.out.println(jugadores[i]);
 						} else {
-							if(!jugadores[i].isBanca() && menu == 'n') {
-								jugadores[i].setJuega(false);
+                            if (!jugador.isBanca() && menu == 'n') {
+                                jugador.setJuega(false);
 								juego--;
-								System.out.println();
-								System.out.println(jugadores[i]);
+                                System.out.println(jugador);
 							}
 						}
-						if (jugadores[i].sumarPuntos() > 7.5 && !jugadores[i].isBanca()) {
+                        if (jugador.sumarPuntos() > 7.5 && !jugador.isBanca()) {
 							System.out.println("Te has pasado");
-							jugadores[i].setJuega(false);
+                            jugador.setJuega(false);
 							juego--;
 						}
-						if((jugadores[i].isBanca() && jugadores[i].sumarPuntos() == 7.5) || (jugadores[i].sumarPuntos() == 7.5)) {
+                        if ((jugador.isBanca() && jugador.sumarPuntos() == 7.5) || (jugador.sumarPuntos() == 7.5)) {
 							juego = 0;
 						}
 					}
